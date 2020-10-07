@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SolarCoffee.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,9 +11,10 @@ namespace SolarCoffee.Data
     {
         public SolarDbContext() { }
         
-        public SolarDbContext(DbContextOptions options) : base(options) { }
+        public SolarDbContext(DbContextOptions<SolarDbContext> options) : base(options) { }
 
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<CustomerAddress> CustomerAddresses { get; set; }
 
     }
 }
