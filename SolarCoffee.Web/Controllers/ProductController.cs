@@ -31,5 +31,13 @@ namespace SolarCoffee.Web.Controllers
             var productViewModels = products.Select(ProductMapper.SerializeProductModel);
             return Ok(productViewModels);
         }
+
+        [HttpPatch("/api/product/{id}")]
+        public ActionResult ArchivedProduct(int id)
+        {
+            _logger.LogInformation("Archiving a product");
+            var archivedResult = _productService.IsArchiveProduct(id);
+            return Ok(archivedResult);
+        }
     }
 }

@@ -37,6 +37,9 @@ namespace SolarCoffee.Services.Order
         public ServiceResponse<bool> GenerateOpenOrder(SalesOrder order)
         {
             var now = DateTime.UtcNow;
+
+            _logger.LogInformation("Generating new order");
+
             foreach (var item in order.SalesOrderItems)
             {
                 item.Product = _productService
@@ -90,9 +93,43 @@ namespace SolarCoffee.Services.Order
                 .ToList();
         }
 
+
+        /// <summary>
+        /// Marks an open SalesOrder as paid
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ServiceResponse<bool> MarkFullFilled(int id)
         {
-            throw new NotImplementedException();
+            var now = DateTime.UtcNow;
+
+            var order = _db.SalesOrders.Find(id);
+            order.UpdatedOn = now;
+            order.IsPaid = true;
+
+            try
+            {
+                _db.SalesOrders.Update(order);
+                _db.SaveChanges();
+
+                return new ServiceResponse<bool>
+                {
+                    IsSuccess = true,
+                    Data = true,
+                    Message = $"Order {order.Id} closed: Invoice paid in full.",
+                    Time = now
+                };
+            }
+            catch (Exception e)
+            {
+                return new ServiceResponse<bool>
+                {
+                    IsSuccess = false,
+                    Data = false,
+                    Message = e.StackTrace,
+                    Time = now
+                };
+            }
         }
     }
 }
