@@ -35,9 +35,36 @@ namespace SolarCoffee.Web.Serialization
             };
         }
 
-        public static List<OrderModel> SerializeOrdersToViewModels()
+        /// <summary>
+        /// Maps the collection of salesOrder to OrderModel
+        /// </summary>
+        /// <param name="orderItems"></param>
+        /// <returns></returns>
+        public static List<OrderModel> SerializeOrdersToViewModels(IEnumerable<SalesOrder> orders)
         {
-            return new List<OrderModel>();
+            return orders.Select(order => new OrderModel()
+            {
+                Id = order.Id,
+                CreatedOn = order.CreatedOn,
+                SalesOrderItems = SerializesSalesOrderItems(order.SalesOrderItems),
+                Customer = CustomerMapper.SelizesCustomer(order.Customer),
+                IsPaid = order.IsPaid
+            });
+        }
+
+        /// <summary>
+        /// Maps the collection of salesOrderItems to salesOrderItemModel
+        /// </summary>
+        /// <param name="orderItems"></param>
+        /// <returns></returns>
+        private static List<SalesOrderItemModel> SerializesSalesOrderItems(IEnumerable<SalesOrderItem> orderItems)
+        {
+            return orderItems.Select(item => new SalesOrderItemModel()
+            {
+                Id = item.Id,
+                Quantity = item.Quantity,
+                Product = ProductMapper.SerializeProductModel(item.Product)
+            }).ToList();
         }
     }
 }
