@@ -57,7 +57,7 @@ namespace SolarCoffee.Services.Customers
         {
             var customer = _db.Customers.Find(id);
             var now = DateTime.UtcNow;
-            if(customer == null)
+            if (customer == null)
             {
                 return new ServiceResponse<bool>
                 {

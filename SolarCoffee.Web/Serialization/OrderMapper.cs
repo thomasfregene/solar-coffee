@@ -34,5 +34,10 @@ namespace SolarCoffee.Web.Serialization
                 UpdatedOn = now
             };
         }
+
+        public static List<OrderModel> SerializeOrdersToViewModels()
+        {
+            return new List<OrderModel>();
+        }
     }
 }

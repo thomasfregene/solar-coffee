@@ -28,7 +28,7 @@ namespace SolarCoffee.Web.Controllers
         }
 
         [HttpPost("/api/invoice")]
-        public ActionResult GenerateNewOrder(InvoiceViewModel invoice)
+        public ActionResult GenerateNewOrder([FromBody]InvoiceViewModel invoice)
         {
             _logger.LogInformation("Generating invoice");
             var order = OrderMapper.SerializeInvoiceToOrder(invoice);
