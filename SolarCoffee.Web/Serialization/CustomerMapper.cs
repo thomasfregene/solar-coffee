@@ -72,5 +72,25 @@ namespace SolarCoffee.Web.Serialization
 
             };
         }
+
+        /// <summary>
+        /// Maps CustomerAddress data model to CustomerAddressModel view Model
+        /// </summary>
+        /// <param name="address"></param>
+        /// <returns></returns>
+        public static CustomerAddressModel MapCustomerAddress(CustomerAddress address)
+        {
+            return new CustomerAddressModel
+            {
+                AddressLine1 = address.AddressLine1,
+                AddressLine2 = address.AddressLine2,
+                City = address.City,
+                State = address.State,
+                PostalCode = address.PostalCode,
+                Country = address.Country,
+                CreatedOn = address.CreatedOn,
+                UpdatedOn = address.UpdatedOn,
+            };
+        }
     }
 }

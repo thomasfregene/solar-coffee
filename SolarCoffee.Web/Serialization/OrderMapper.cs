@@ -47,9 +47,9 @@ namespace SolarCoffee.Web.Serialization
                 Id = order.Id,
                 CreatedOn = order.CreatedOn,
                 SalesOrderItems = (List<SalesOrderItem>)SerializesSalesOrderItems(order.SalesOrderItems),
-                Customer = CustomerMapper.SelizesCustomer(order.Customer),
+                Customer = CustomerMapper.SerializeCustomer(order.Customer),
                 IsPaid = order.IsPaid
-            });
+            }).ToList();
         }
 
         /// <summary>
