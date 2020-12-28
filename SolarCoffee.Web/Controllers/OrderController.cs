@@ -33,6 +33,23 @@ namespace SolarCoffee.Web.Controllers
             _logger.LogInformation("Generating invoice");
             var order = OrderMapper.SerializeInvoiceToOrder(invoice);
             order.Customer = _customerService.GetCustomerById(invoice.Id);
+            _orderService.GenerateOpenOrder(order);
+            return Ok();
+        }
+
+        [HttpGet("/api/orders")]
+        public ActionResult GetOrders()
+        {
+            var orders = _orderService.GetOrders();
+            var orderModels = OrderMapper.SerializeOrdersToViewModels(orders);
+            return Ok(orderModels);
+        }
+
+        [HttpPatch("/api/orders/complete/{id}")]
+        public ActionResult MakeOrderComplete(int id)
+        {
+            _logger.LogInformation($"Making order {id} complete...");
+            _orderService.MarkFullFilled(id);
             return Ok();
         }
     }

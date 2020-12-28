@@ -82,14 +82,15 @@ namespace SolarCoffee.Web.Serialization
         {
             return new CustomerAddressModel
             {
+                Id = address.Id,
                 AddressLine1 = address.AddressLine1,
                 AddressLine2 = address.AddressLine2,
                 City = address.City,
                 State = address.State,
                 PostalCode = address.PostalCode,
                 Country = address.Country,
-                CreatedOn = address.CreatedOn,
-                UpdatedOn = address.UpdatedOn,
+                CreatedOn = DateTime.UtcNow,
+                UpdatedOn = DateTime.UtcNow
             };
         }
 
@@ -108,8 +109,8 @@ namespace SolarCoffee.Web.Serialization
                 State = address.State,
                 PostalCode = address.PostalCode,
                 Country = address.Country,
-                CreatedOn = address.CreatedOn,
-                UpdatedOn = address.UpdatedOn,
+                CreatedOn = DateTime.UtcNow,
+                UpdatedOn = DateTime.UtcNow
             };
         }
     }
