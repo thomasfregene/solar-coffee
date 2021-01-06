@@ -38,6 +38,7 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 import SolarButton from '@/components/SolarButton.vue';
 import SolarModal from '@/components/modals/SolarModal.vue';
 import { IProduct, IProductInventory } from '@/types/Product';
+import { IShipment } from '@/types/Shipment';
 
 @Component({
     name: 'ShipmentModal',
@@ -63,6 +64,15 @@ export default class ShipmentModal extends Vue{
 
     close(){
         this.$emit('close');
+    }
+
+    save(){
+        let shipment: IShipment ={
+            productId: this.selectedProduct.id,
+            adjustment: this.qtyReceived
+        };
+
+        this.$emit('save:shipment', shipment)
     }
 }
 </script>
