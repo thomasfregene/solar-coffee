@@ -69,6 +69,11 @@ import SolarButton from '@/components/SolarButton.vue';
 import NewProductModal from '@/components/modals/NewProductModal.vue';
 import ShipmentModal from '@/components/modals/ShipmentModal.vue';
 import { IShipment } from '@/types/Shipment';
+
+import InventoryService from '@/services/inventory-service';
+
+const inventoryService = new InventoryService();
+
 @Component({
     name: 'Inventory',
     components: {SolarButton, NewProductModal, ShipmentModal}
@@ -76,38 +81,7 @@ import { IShipment } from '@/types/Shipment';
 export default class Inventory extends Vue{
     isNewProductVisible: boolean = false;
     isShipmentVisible: boolean = false;
-    inventory: IProductInventory[] = [
-        {
-            id: 1,
-            product:{
-                id: 1,
-                name: "Some Product",
-                description: "Good Stuff",
-                price: 100,
-                createdOn: new Date(),
-                updatedOn: new Date(),
-                isTaxable: true,
-                isArchived: false
-            },
-            quantityOnHand: 100,
-            idealQuantity: 100
-        },
-          {
-            id: 2,
-            product:{
-                id: 2,
-                name: "Another Product",
-                description: "Good Stuff",
-                price: 100,
-                createdOn: new Date(),
-                updatedOn: new Date(),
-                isTaxable: false,
-                isArchived: false
-            },
-            quantityOnHand: 40,
-            idealQuantity: 20
-        }
-    ];
+    inventory: IProductInventory[] = [];
 
     closeModals(){
         this.isShipmentVisible = false;
@@ -130,6 +104,14 @@ export default class Inventory extends Vue{
     saveNewShipment(shipment:IShipment){
         console.log('saveNewShipment:');
         console.log(shipment);
+    }
+
+    async fetchData(){
+        this.inventory = await inventoryService.getInventory();
+    }
+
+    async created(){
+        await this.fetchData();
     }
 }
 </script>
