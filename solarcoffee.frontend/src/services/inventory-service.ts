@@ -1,4 +1,5 @@
 import { IProductInventory } from '@/types/Product';
+import { IShipment } from '@/types/Shipment';
 import axios from 'axios';
 /**
  * Inventory Service.
@@ -9,6 +10,11 @@ export default class InventoryService{
 
     public async getInventory() : Promise<IProductInventory[]>{
         let result = await axios.get(`${this.API_URL}/inventory`);
+        return result.data;
+    }
+
+    public async updateInventoryQuantity(shipment: IShipment){
+        let result = await axios.patch(`${this.API_URL}/inventory/`, shipment);
         return result.data;
     }
 }

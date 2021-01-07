@@ -101,9 +101,10 @@ export default class Inventory extends Vue{
         console.log(newProduct);
     }
 
-    saveNewShipment(shipment:IShipment){
-        console.log('saveNewShipment:');
-        console.log(shipment);
+    async saveNewShipment(shipment:IShipment){
+         await inventoryService.updateInventoryQuantity(shipment);
+        this.isShipmentVisible = false;
+        await this.fetchData(); //original video is initial()
     }
 
     async fetchData(){
