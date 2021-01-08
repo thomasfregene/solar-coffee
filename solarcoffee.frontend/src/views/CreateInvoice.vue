@@ -4,7 +4,16 @@
             Create Invoice
         </h1>
         <hr/>
-        <div class="invoice-step" v-if="invoiceStep === 1"></div>
+        <div class="invoice-step" v-if="invoiceStep === 1">
+            <h2>Step 1: Select Customers</h2>
+            <div v-if="customers.length" class="invoice-step-detail">
+                <label for="customer">Customer:</label>
+                <select v-model="selectedCustomerId" class="invoiceCustomer" id="customer">
+                    <option disabled value="">Please select a customer</option>
+                    <option v-for="c in customers" :value="c.id" :key="c.id">{{c.firstName + " " + c.lastName}}</option>
+                </select>
+            </div>
+        </div>
         <div class="invoice-step" v-if="invoiceStep === 2"></div>
         <div class="invoice-step" v-if="invoiceStep === 3"></div>
     </div>
@@ -37,10 +46,12 @@ const invoiceService = new InventoryService();
         updatedOn: new Date(),
         lineItems: [],
     };
+
     customers: ICustomer[] = [];
     selectedCustomerId: number = 0;
     inventory: IProductInventory[] = [];
     lineItems: ILineItem[] = [];
+
     newItem: ILineItem = {
         product: undefined,
         quantity: 0 
@@ -52,7 +63,7 @@ const invoiceService = new InventoryService();
     }
 
     //life cycle hook
-    async create(){
+    async created(){
         await this.fetchData();
     }
  }
