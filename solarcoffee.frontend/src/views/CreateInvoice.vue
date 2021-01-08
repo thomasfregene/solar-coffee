@@ -16,6 +16,13 @@
         </div>
         <div class="invoice-step" v-if="invoiceStep === 2"></div>
         <div class="invoice-step" v-if="invoiceStep === 3"></div>
+
+        <hr/>
+        <div class="invoice-steps-actions">
+            <solar-button @button:click="prev" :disabled="!canGoPrev">Previous</solar-button>
+            <solar-button @button:click="next" :disabled="!canGoNext">Next</solar-button>
+            <solar-button @button:click="startOver">Start Over</solar-button>
+        </div>
     </div>
 </template>
 
@@ -26,6 +33,7 @@ import { ICustomer } from '@/types/Customer';
 import { IProductInventory } from '@/types/Product';
 import CustomerService from '@/services/customer-service';
 import InventoryService from '@/services/inventory-service';
+import SolarButton from '@/components/SolarButton.vue';
 
 
 const customerService = new CustomerService();
@@ -33,7 +41,8 @@ const inventoryService = new InventoryService();
 const invoiceService = new InventoryService();
 
 @Component({
-    name: 'Create Invoice'
+    name: 'Create Invoice',
+    components: {SolarButton}
 })
  export default class CreateInvoice extends Vue{
 
@@ -55,6 +64,35 @@ const invoiceService = new InventoryService();
     newItem: ILineItem = {
         product: undefined,
         quantity: 0 
+    }
+
+    get canGoNext(){
+        if(this.invoiceStep === 1){
+            return this.selectedCustomerId !== 0;
+        }
+        
+        if(this.invoiceStep === 2){
+            return true;
+        }
+
+        if(this.invoiceStep === 3){
+            return false
+        }
+        return false;
+    }
+
+    prev(): void{
+        if(this.invoiceStep === 1){
+            return;
+        }
+        this.invoiceStep -= 1;
+    }
+
+    next(): void{
+        if(this.invoiceStep === 3){
+            return;
+        }
+        this.invoiceStep += 1;
     }
 
     async fetchData(): Promise<void>{
