@@ -65,7 +65,7 @@ namespace SolarCoffee.Web
 
             app.UseCors(builder =>
             builder
-            .WithOrigins("http://localhost:8080")
+            .WithOrigins("http://localhost:8080", "http://localhost:8081")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()
