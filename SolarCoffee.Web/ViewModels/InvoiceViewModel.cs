@@ -14,7 +14,8 @@ namespace SolarCoffee.Web.ViewModels
         public int Id { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
-        public Customer Customer { get; set; }
+        public int CustomerId { get; set; }
+        //public Customer Customer { get; set; }
         public List<SalesOrderItemModel> LineItems { get; set; }
     }
 

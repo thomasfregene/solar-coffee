@@ -46,7 +46,8 @@ namespace SolarCoffee.Web.Serialization
             {
                 Id = order.Id,
                 CreatedOn = order.CreatedOn,
-                SalesOrderItems = (List<SalesOrderItem>)SerializesSalesOrderItems(order.SalesOrderItems),
+                UpdatedOn = order.UpdatedOn,
+                SalesOrderItems = SerializesSalesOrderItems(order.SalesOrderItems),
                 Customer = CustomerMapper.SerializeCustomer(order.Customer),
                 IsPaid = order.IsPaid
             }).ToList();
@@ -57,7 +58,7 @@ namespace SolarCoffee.Web.Serialization
         /// </summary>
         /// <param name="orderItems"></param>
         /// <returns></returns>
-        private static IEnumerable<SalesOrderItemModel> SerializesSalesOrderItems(IEnumerable<SalesOrderItem> orderItems)
+        private static List<SalesOrderItemModel> SerializesSalesOrderItems(IEnumerable<SalesOrderItem> orderItems)
         {
             return orderItems.Select(item => new SalesOrderItemModel()
             {

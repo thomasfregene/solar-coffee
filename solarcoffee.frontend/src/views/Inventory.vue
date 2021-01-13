@@ -44,7 +44,7 @@
                 </td>
                 <td>
                     <div>
-                        <div class="lni-cross-circle product-archive"
+                        <div class="lni lni-cross-circle product-archive"
                          @click="archiveProduct(item.product.id)"></div>
                     </div>
                 </td>
